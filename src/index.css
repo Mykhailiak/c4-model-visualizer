@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#root, .ant-layout {
+  height: 100vh;
+}
+
+.text-content-editor {
+  height: 100%;
+  width: 300px;
+  display: block;
+  padding: 15px;
+  resize: none;
+  background-color: transparent;
+  border: none;
+  border-right: 1px solid #e8e8e8;
+}
+
+.text-content-editor:focus {
+  outline: none;
+}
