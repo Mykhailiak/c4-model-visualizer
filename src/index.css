@@ -30,3 +30,7 @@ code {
 .text-content-editor:focus {
   outline: none;
 }
+
+#cy {
+  height: 100vh;
+}

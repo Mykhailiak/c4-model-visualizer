@@ -1,22 +1,60 @@
 import React, { Component } from 'react';
-import { select } from 'd3-selection';
+import cytoscape from 'cytoscape';
 
 export default class Diagram extends Component {
   componentDidMount() {
-    var svg = select("#my_dataviz").append("svg").attr("width", 200).attr("height", 200)
-
-    svg.append('circle')
-      .attr('cx', 100)
-      .attr('cy', 100)
-      .attr('r', 50)
-      .attr('stroke', 'black')
-      .attr('fill', '#69a3b2');
-
+    const cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: [
+        {
+          data: { id: 'a' },
+        },
+        {
+          data: { id: 'b' },
+        },
+        {
+          data: { id: 'c' },
+        },
+        {
+          data: { id: 'd' },
+        },
+        {
+          data: { id: 'ab', source: 'a', target: 'b' },
+        },
+        {
+          data: { id: 'bc', source: 'b', target: 'c' },
+        },
+        {
+          data: { id: 'cd', source: 'c', target: 'd' },
+        },
+      ],
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'background-color': '#777',
+            label: 'data(id)',
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            width: 3,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle',
+          }
+        }
+      ],
+      layout: {
+        rows: 1,
+      },
+    });
   }
 
   render() {
     return (
-      <div id="my_dataviz"></div>
+      <div id="cy"></div>
     );
   }
 }

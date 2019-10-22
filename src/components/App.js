@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import TextContentEditor from './TextContentEditor';
+import Diagram from './Diagram';
 
 const {
   Sider,
@@ -12,7 +13,7 @@ function App() {
     <Layout className="app-layout">
       <Sider width="70">Sider</Sider>
       <Content>
-        <TextContentEditor />
+        <Diagram />
       </Content>
     </Layout>
   );
