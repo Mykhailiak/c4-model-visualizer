@@ -10,11 +10,8 @@ const {
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { data: '' };
-
-    this.updateData = this.updateData.bind(this);
+  state = {
+    data: '',
   }
 
   updateData(event) {
@@ -29,7 +26,7 @@ class App extends Component {
           <Row type='flex'>
             <Col span={6}>
               <TextContentEditor
-                updateState={this.updateData}
+                updateState={e => this.updateData(e)}
               />
             </Col>
             <Col span={18}>
