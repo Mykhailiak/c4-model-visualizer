@@ -1,5 +1,10 @@
 import React from 'react';
 
-export default () => (
-  <textarea className="text-content-editor"></textarea>
+export default ({
+  updateState,
+}) => (
+  <textarea
+    className="text-content-editor"
+    onChange={updateState}
+  ></textarea>
 )

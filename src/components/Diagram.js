@@ -1,22 +1,47 @@
 import React, { Component } from 'react';
-import { select } from 'd3-selection';
+import cytoscape from 'cytoscape';
+import dagre from 'cytoscape-dagre';
+
+const style = [
+  {
+    selector: 'node',
+    style: {
+      'background-color': '#777',
+      label: 'data(id)',
+    }
+  },
+  {
+    selector: 'edge',
+    style: {
+      width: 3,
+      'line-color': '#ccc',
+      'target-arrow-color': '#ccc',
+      'target-arrow-shape': 'triangle',
+    }
+  }
+];
+
+cytoscape.use(dagre)
 
 export default class Diagram extends Component {
   componentDidMount() {
-    var svg = select("#my_dataviz").append("svg").attr("width", 200).attr("height", 200)
+    this.layout = { name: 'grid' };
+    this.cy = cytoscape({
+      style,
+      container: document.getElementById('cy'),
+      elements: [],
+      layout: this.layout,
+    });
+  }
 
-    svg.append('circle')
-      .attr('cx', 100)
-      .attr('cy', 100)
-      .attr('r', 50)
-      .attr('stroke', 'black')
-      .attr('fill', '#69a3b2');
-
+  componentDidUpdate() {
+    this.cy.json({ elements: this.props.data });
+    this.cy.ready(() => this.cy.layout(this.layout).run());
   }
 
   render() {
     return (
-      <div id="my_dataviz"></div>
+      <div id='cy'></div>
     );
   }
 }

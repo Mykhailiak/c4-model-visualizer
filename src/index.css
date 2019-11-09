@@ -18,7 +18,7 @@ code {
 
 .text-content-editor {
   height: 100%;
-  width: 300px;
+  width: 100%;
   display: block;
   padding: 15px;
   resize: none;
@@ -29,4 +29,8 @@ code {
 
 .text-content-editor:focus {
   outline: none;
+}
+
+#cy {
+  height: 100vh;
 }
