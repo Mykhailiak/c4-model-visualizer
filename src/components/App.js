@@ -14,8 +14,8 @@ class App extends Component {
     data: '',
   }
 
-  updateData(event) {
-    this.setState({ data: eval(event.target.value) });
+  updateData(data) {
+    this.setState({ data });
   }
 
   render() {
@@ -26,7 +26,7 @@ class App extends Component {
           <Row type='flex'>
             <Col span={6}>
               <TextContentEditor
-                updateState={e => this.updateData(e)}
+                updateState={data => this.updateData(data)}
               />
             </Col>
             <Col span={18}>
