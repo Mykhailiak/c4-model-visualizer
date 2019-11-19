@@ -1,0 +1,24 @@
+context:
+  order-support-system:
+    name: Mail Order Support System
+    description: Automates processing of imaged mail orders
+    relations:
+      to:
+        order-processing-system: posts Orders
+  order-processing-system:
+    name: Order processing
+    caption: External
+    description: Existing Order processing system
+  mail-processing-facility:
+    name: Mail Processing Facility System
+    caption: External
+    description: Mail processing facility with Imaging technology
+    relations:
+      to:
+        order-support-system: Uploads imaged orders
+  user:
+    name: Data Entry Specialist
+    caption: Human
+    relations:
+      to:
+        order-support-system: consumes
