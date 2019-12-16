@@ -20,19 +20,28 @@ code {
   height: 100%;
   width: 100%;
   display: block;
-  padding: 15px;
+  padding: 15px 15px 35px 15px;
   resize: none;
   background-color: transparent;
   border: none;
   border-right: 1px solid #e8e8e8;
-  white-space: pre-visible;
-  font-variant-alternates: visible-controls;
-  font-feature-settings: "vwsp" 1;
-  text-transform: visible-whitespace;
+  font-family: monospace;
 }
 
 .text-content-editor:focus {
   outline: none;
+}
+
+.ant-alert.content-status-alert {
+  position: relative;
+  top: -29px;
+  border-radius: 0;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.content-status-alert .ant-alert-icon {
+  top: 7.5px;
 }
 
 #cy {

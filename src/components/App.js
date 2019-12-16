@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Layout, Row, Col } from 'antd';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
+import ContentStatus from './ContentStatus';
 import { parseAsync as parseYaml } from '../utils/yaml-parser';
 
 const {
@@ -13,12 +14,13 @@ const {
 class App extends Component {
   state = {
     data: '',
+    parsingStatus: null,
   }
 
   updateData(input) {
     return parseYaml(input)
-      .then(data => this.setState({ data }))
-      .catch(console.log)
+      .then(data => this.setState({ data, parsingStatus: 'success' }))
+      .catch(() => this.setState({ parsingStatus: 'error' }));
   }
 
   render() {
@@ -31,6 +33,7 @@ class App extends Component {
               <TextContentEditor
                 updateState={data => this.updateData(data)}
               />
+              <ContentStatus type={this.state.parsingStatus} />
             </Col>
             <Col span={18}>
               <Diagram
