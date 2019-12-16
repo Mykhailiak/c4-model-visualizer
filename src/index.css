@@ -25,6 +25,10 @@ code {
   background-color: transparent;
   border: none;
   border-right: 1px solid #e8e8e8;
+  white-space: pre-visible;
+  font-variant-alternates: visible-controls;
+  font-feature-settings: "vwsp" 1;
+  text-transform: visible-whitespace;
 }
 
 .text-content-editor:focus {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Layout, Row, Col } from 'antd';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
+import { parseAsync as parseYaml } from '../utils/yaml-parser';
 
 const {
   Sider,
@@ -14,8 +15,10 @@ class App extends Component {
     data: '',
   }
 
-  updateData(data) {
-    this.setState({ data });
+  updateData(input) {
+    return parseYaml(input)
+      .then(data => this.setState({ data }))
+      .catch(console.log)
   }
 
   render() {
