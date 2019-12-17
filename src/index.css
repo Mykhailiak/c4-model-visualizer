@@ -44,6 +44,18 @@ code {
   top: 7.5px;
 }
 
+.ant-page-header {
+  border-bottom: 1px solid rgb(235, 237, 240);
+  background-color: #fff;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.context-selection.ant-select {
+  width: 300px;
+  margin: 10px;
+}
+
 #cy {
   height: 100vh;
 }

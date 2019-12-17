@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Row, Col } from 'antd';
+import { Layout, Row, Col, TreeSelect } from 'antd';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
 import ContentStatus from './ContentStatus';
@@ -10,6 +10,30 @@ const {
   Content,
 } = Layout;
 
+const treeData = [
+  {
+    title: 'Node1',
+    value: '0-0',
+    key: '0-0',
+    children: [
+      {
+        title: 'Child Node1',
+        value: '0-0-1',
+        key: '0-0-1',
+      },
+      {
+        title: 'Child Node2',
+        value: '0-0-2',
+        key: '0-0-2',
+      },
+    ],
+  },
+  {
+    title: 'Node2',
+    value: '0-1',
+    key: '0-1',
+  },
+];
 
 class App extends Component {
   state = {
@@ -36,6 +60,15 @@ class App extends Component {
               <ContentStatus type={this.state.parsingStatus} />
             </Col>
             <Col span={18}>
+              <TreeSelect
+                value={this.state.value}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                treeData={treeData}
+                placeholder="Please select context"
+                treeDefaultExpandAll
+                onChange={this.onChange}
+                className="context-selection"
+              />
               <Diagram
                 data={this.state.data}
               />
