@@ -24,18 +24,39 @@ const style = [
 cytoscape.use(dagre)
 
 export default class Diagram extends Component {
+  computeElements(context = {}) {
+    return Object.entries(context)
+      .reduce((acc, [key, value]) => {
+        const { relations: { to: targets } = {} } = value;
+
+        return acc.concat({ data: { id: key } }).concat(
+          targets ? acc.concat(Object.keys(targets).map(target => ({
+            data: { id: `${key}_${target}`, source: key, target }
+          }))) : []
+        )
+      }, []);
+  }
+
   componentDidMount() {
     this.layout = { name: 'grid' };
     this.cy = cytoscape({
       style,
       container: document.getElementById('cy'),
-      elements: [],
+      elements: [
+        { data: { id: 'a' } },
+        { data: { id: 'b' } },
+      ],
       layout: this.layout,
     });
   }
 
   componentDidUpdate() {
-    this.cy.json({ elements: this.props.data });
+    const { context } = this.props.data;
+    const elements = this.computeElements(context);
+    debugger;
+    // Needs the investigation in why the list contains duplicates
+
+    this.cy.json({ elements });
     this.cy.ready(() => this.cy.layout(this.layout).run());
   }
 
