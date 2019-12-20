@@ -51,8 +51,6 @@ export default class Diagram extends Component {
   componentDidUpdate() {
     const { context } = this.props.data;
     const elements = this.computeElements(context);
-    debugger;
-    // Needs the investigation in why the list contains duplicates
 
     this.cy.json({ elements });
     this.cy.ready(() => this.cy.layout(this.layout).run());
