@@ -39,9 +39,11 @@ export default class Diagram extends Component {
   }
 
   componentDidMount() {
-    this.layout = { name: 'grid' };
+    this.layout = { name: 'dagre' };
     this.cy = cytoscape({
       style,
+      boxSelectionEnabled: false,
+      autounselectify: true,
       container: document.getElementById('cy'),
       elements: [],
       layout: this.layout,
