@@ -6,17 +6,18 @@ const style = [
   {
     selector: 'node',
     style: {
-      'background-color': '#777',
+      'background-color': '#11479e',
       label: 'data(id)',
     }
   },
   {
     selector: 'edge',
     style: {
-      width: 3,
-      'line-color': '#ccc',
-      'target-arrow-color': '#ccc',
+      width: 4,
       'target-arrow-shape': 'triangle',
+      'line-color': '#9dbaea',
+      'target-arrow-color': '#9dbaea',
+      'curve-style': 'bezier'
     }
   }
 ];
@@ -30,9 +31,9 @@ export default class Diagram extends Component {
         const { relations: { to: targets } = {} } = value;
 
         return acc.concat({ data: { id: key } }).concat(
-          targets ? acc.concat(Object.keys(targets).map(target => ({
+          targets ? Object.keys(targets).map(target => ({
             data: { id: `${key}_${target}`, source: key, target }
-          }))) : []
+          })) : []
         )
       }, []);
   }
@@ -42,10 +43,7 @@ export default class Diagram extends Component {
     this.cy = cytoscape({
       style,
       container: document.getElementById('cy'),
-      elements: [
-        { data: { id: 'a' } },
-        { data: { id: 'b' } },
-      ],
+      elements: [],
       layout: this.layout,
     });
   }
