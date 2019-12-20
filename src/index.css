@@ -20,15 +20,40 @@ code {
   height: 100%;
   width: 100%;
   display: block;
-  padding: 15px;
+  padding: 15px 15px 35px 15px;
   resize: none;
   background-color: transparent;
   border: none;
   border-right: 1px solid #e8e8e8;
+  font-family: monospace;
 }
 
 .text-content-editor:focus {
   outline: none;
+}
+
+.ant-alert.content-status-alert {
+  position: relative;
+  top: -29px;
+  border-radius: 0;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.content-status-alert .ant-alert-icon {
+  top: 7.5px;
+}
+
+.ant-page-header {
+  border-bottom: 1px solid rgb(235, 237, 240);
+  background-color: #fff;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.context-selection.ant-select {
+  width: 300px;
+  margin: 10px;
 }
 
 #cy {
