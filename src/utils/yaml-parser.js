@@ -11,7 +11,7 @@ const validate = (input) => (
     input,
     input.includes(':'),
   ].every(Boolean)
-);
+)
 
 /**
  * Parse YAML into JSON
