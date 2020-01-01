@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Layout, Row, Col, TreeSelect } from 'antd';
+import {
+  Layout, Row, Col, TreeSelect,
+} from 'antd';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
 import ContentStatus from './ContentStatus';
@@ -36,32 +38,38 @@ const treeData = [
 ];
 
 class App extends Component {
-  state = {
-    data: '',
-    parsingStatus: null,
+  constructor() {
+    super();
+
+    this.state = {
+      data: '',
+      parsingStatus: null,
+    };
   }
 
   updateData(input) {
     return parseYaml(input)
-      .then(data => this.setState({ data, parsingStatus: 'success' }))
+      .then((data) => this.setState({ data, parsingStatus: 'success' }))
       .catch(() => this.setState({ parsingStatus: 'error' }));
   }
 
   render() {
+    const { parsingStatus, value, data } = this.state;
+
     return (
       <Layout className="app-layout">
         <Sider width="70">Sider</Sider>
         <Content>
-          <Row type='flex'>
+          <Row type="flex">
             <Col span={6}>
               <TextContentEditor
-                updateState={data => this.updateData(data)}
+                updateState={(payload) => this.updateData(payload)}
               />
-              <ContentStatus type={this.state.parsingStatus} />
+              <ContentStatus type={parsingStatus} />
             </Col>
             <Col span={18}>
               <TreeSelect
-                value={this.state.value}
+                value={value}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={treeData}
                 placeholder="Please select context"
@@ -70,7 +78,7 @@ class App extends Component {
                 className="context-selection"
               />
               <Diagram
-                data={this.state.data}
+                data={data}
               />
             </Col>
           </Row>
