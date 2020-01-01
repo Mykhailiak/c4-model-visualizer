@@ -6,8 +6,14 @@ const style = [
   {
     selector: 'node',
     style: {
-      'background-color': '#11479e',
+      width: 70,
       label: 'data(id)',
+      shape: 'round-rectangle',
+      'font-size': 5,
+      'text-max-width': 70,
+      'text-valign': 'center',
+      'background-color': '#b3c2d8',
+      'text-wrap': 'ellipsis',
     },
   },
   {
@@ -15,9 +21,10 @@ const style = [
     style: {
       width: 4,
       'target-arrow-shape': 'triangle',
-      'line-color': '#9dbaea',
-      'target-arrow-color': '#9dbaea',
-      'curve-style': 'bezier',
+      'line-color': '#cdd6e4',
+      'target-arrow-color': '#cdd6e4',
+      'curve-style': 'straight',
+      'line-cap': 'square',
     },
   },
 ];
