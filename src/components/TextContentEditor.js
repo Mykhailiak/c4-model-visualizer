@@ -5,6 +5,6 @@ export default ({
 }) => (
   <textarea
     className="text-content-editor"
-    onChange={e => updateState(e.target.value)}
-  ></textarea>
-)
+    onChange={(e) => updateState(e.target.value)}
+  />
+);
