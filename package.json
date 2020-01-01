@@ -16,7 +16,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "husky": "^3.1.0",
+    "pre-commit": "^1.2.2",
     "react-scripts": "3.1.2"
   },
   "scripts": {
@@ -24,14 +24,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "eslint": "eslint ./src",
+    "eslint:check": "eslint ./src",
     "eslint:fix": "eslint ./src --fix"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run eslint"
-    }
-  },
+  "pre-commit": [
+    "eslint:check"
+  ],
   "eslintConfig": {
     "extends": "airbnb",
     "env": {
