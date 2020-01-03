@@ -46,10 +46,12 @@ code {
   padding-bottom: 3px;
   padding-left: 31px;
   font-size: 11px;
+  font-family: monospace;
+  line-height: normal;
 }
 
 .content-status-alert .ant-alert-icon {
-  top: 5.5px;
+  top: 3.5px;
 }
 
 .ant-page-header {
