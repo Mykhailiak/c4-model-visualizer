@@ -4,7 +4,6 @@ import {
 } from 'antd';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
-import ContentStatus from './ContentStatus';
 import { parseAsync as parseYaml } from '../utils/yaml-parser';
 
 const {
@@ -61,13 +60,13 @@ class App extends Component {
         <Sider width="70">Sider</Sider>
         <Content>
           <Row type="flex">
-            <Col span={6}>
+            <Col span={8} className="sidebar">
               <TextContentEditor
                 updateState={(payload) => this.updateData(payload)}
+                status={parsingStatus}
               />
-              <ContentStatus type={parsingStatus} />
             </Col>
-            <Col span={18}>
+            <Col span={16}>
               <TreeSelect
                 value={value}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}

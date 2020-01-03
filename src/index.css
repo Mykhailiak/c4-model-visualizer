@@ -24,7 +24,6 @@ code {
   resize: none;
   background-color: transparent;
   border: none;
-  border-right: 1px solid #e8e8e8;
   font-family: monospace;
 }
 
@@ -32,16 +31,25 @@ code {
   outline: none;
 }
 
-.ant-alert.content-status-alert {
+.sidebar {
   position: relative;
-  top: -29px;
+  padding-bottom: 31px;
+  border-right: 1px solid #e8e8e8;
+}
+
+.ant-alert.content-status-alert {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   border-radius: 0;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 31px;
+  font-size: 11px;
 }
 
 .content-status-alert .ant-alert-icon {
-  top: 7.5px;
+  top: 5.5px;
 }
 
 .ant-page-header {
@@ -57,5 +65,5 @@ code {
 }
 
 #cy {
-  height: calc(100vh - 32px);
+  height: calc(100vh - 52px);
 }
