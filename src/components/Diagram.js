@@ -55,12 +55,15 @@ export default class Diagram extends Component {
 
   /* eslint-disable class-methods-use-this */
   computeElements(context = {}) {
-    return Object.entries(context)
-      .reduce((acc, [key, value]) => {
-        const { relations: { to: targets } = {} } = value;
+    const keys = Object.keys(context);
+
+    return keys
+      .reduce((acc, key) => {
+        const { relations: { to: targetsSource } = {} } = context[key];
+        const validEdge = targetsSource && Object.keys(targetsSource).some((t) => keys.includes(t));
 
         return acc.concat({ data: { id: key } }).concat(
-          targets ? Object.keys(targets).map((target) => ({
+          validEdge ? Object.keys(targetsSource).map((target) => ({
             data: { id: `${key}_${target}`, source: key, target },
           })) : [],
         );

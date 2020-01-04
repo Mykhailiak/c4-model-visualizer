@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Layout, Row, Col, TreeSelect,
+  Layout,
+  Row,
+  Col,
+  TreeSelect,
 } from 'antd';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
@@ -76,9 +79,7 @@ class App extends Component {
                 onChange={this.onChange}
                 className="context-selection"
               />
-              <Diagram
-                data={data}
-              />
+              <Diagram data={data} />
             </Col>
           </Row>
         </Content>
