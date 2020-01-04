@@ -9,6 +9,18 @@ context:
     name: Order processing
     caption: External
     description: Existing Order processing system
+    container:
+      database:
+        name: DB
+        description: Main DB
+        relations:
+          to:
+            back-end: Uses DB directly
+      back-end:
+        name: 'Application Back-end part'
+        relations:
+          to:
+            front-end: Communication by using API
   mail-processing-facility:
     name: Mail Processing Facility System
     caption: External
