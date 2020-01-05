@@ -7,7 +7,7 @@ const style = [
     selector: 'node',
     style: {
       width: 70,
-      label: 'data(id)',
+      label: 'data(name)',
       shape: 'round-rectangle',
       'font-size': 5,
       'text-max-width': 70,
@@ -63,8 +63,9 @@ export default class Diagram extends Component {
       .reduce((acc, key) => {
         const { relations: { to: targetsSource } = {} } = context[key];
         const validEdge = targetsSource && Object.keys(targetsSource).some((t) => keys.includes(t));
+        const name = context[key].name || key;
 
-        return acc.concat({ data: { id: key } }).concat(
+        return acc.concat({ data: { name, id: key } }).concat(
           validEdge ? Object.keys(targetsSource).map((target) => ({
             data: { id: `${key}_${target}`, source: key, target },
           })) : [],
