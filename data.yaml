@@ -17,7 +17,7 @@ context:
           to:
             back-end: Uses DB directly
       back-end:
-        name: 'Application Back-end part'
+        name: Application Back-end part
         relations:
           to:
             front-end: Communication by using API

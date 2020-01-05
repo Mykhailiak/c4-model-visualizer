@@ -2,27 +2,26 @@ import React, { useState } from 'react';
 import { TreeSelect } from 'antd';
 
 const levelsKey = ['context', 'container', 'component', 'class'];
+const createDataMap = (data = {}, level = 0) => (
+  Object.values(data[levelsKey[level]] || [])
+    .reduce((acc, element) => {
+      const { name } = element;
 
-const createDataMap = (data = {}, level = 0) => {
-  const out = [];
+      acc.push({
+        value: name,
+        key: name,
+        title: name,
+        children: createDataMap(element, level + 1),
+      });
 
-  Object.values(data[levelsKey[level]] || []).forEach((v) => {
-    const key = Math.random();
-
-    out.push({
-      key,
-      title: v.name,
-      value: key,
-      children: createDataMap(v, level + 1),
-    });
-  });
-
-  return out;
-};
+      return acc;
+    }, [])
+);
 
 export default function LevelSelector({ parsedYaml }) {
   const [value, setValue] = useState();
   const treeData = createDataMap(parsedYaml);
+  const onChangeHandler = (v) => setValue(v);
 
   return (
     <TreeSelect
@@ -30,8 +29,7 @@ export default function LevelSelector({ parsedYaml }) {
       dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
       treeData={treeData}
       placeholder="Please select context"
-      treeDefaultExpandAll
-      onChange={setValue}
+      onChange={onChangeHandler}
       className="context-selection"
     />
   );
