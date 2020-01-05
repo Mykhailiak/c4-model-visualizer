@@ -3,10 +3,10 @@ import {
   Layout,
   Row,
   Col,
-  TreeSelect,
 } from 'antd';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
+import LevelSelector from './LevelSelector';
 import { parseAsync as parseYaml } from '../utils/yaml-parser';
 
 const {
@@ -14,37 +14,12 @@ const {
   Content,
 } = Layout;
 
-const treeData = [
-  {
-    title: 'Node1',
-    value: '0-0',
-    key: '0-0',
-    children: [
-      {
-        title: 'Child Node1',
-        value: '0-0-1',
-        key: '0-0-1',
-      },
-      {
-        title: 'Child Node2',
-        value: '0-0-2',
-        key: '0-0-2',
-      },
-    ],
-  },
-  {
-    title: 'Node2',
-    value: '0-1',
-    key: '0-1',
-  },
-];
-
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      data: '',
+      data: {},
       parsingStatus: null,
     };
   }
@@ -56,7 +31,7 @@ class App extends Component {
   }
 
   render() {
-    const { parsingStatus, value, data } = this.state;
+    const { parsingStatus, data } = this.state;
 
     return (
       <Layout className="app-layout">
@@ -70,14 +45,8 @@ class App extends Component {
               />
             </Col>
             <Col span={16}>
-              <TreeSelect
-                value={value}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={treeData}
-                placeholder="Please select context"
-                treeDefaultExpandAll
-                onChange={this.onChange}
-                className="context-selection"
+              <LevelSelector
+                parsedYaml={data}
               />
               <Diagram data={data} />
             </Col>
