@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
+import { levelsKey } from './LevelSelector';
 
 const style = [
   {
@@ -55,24 +56,30 @@ export default class Diagram extends Component {
     cy.ready(() => cy.layout(layout).run());
   }
 
-  /* eslint-disable class-methods-use-this */
   computeElements(context = {}) {
     const keys = Object.keys(context);
 
     return keys
       .reduce((acc, key) => {
+        let groups = [];
         const { relations: { to: targetsSource } = {} } = context[key];
         const validEdge = targetsSource && Object.keys(targetsSource).some((t) => keys.includes(t));
         const name = context[key].name || key;
 
-        return acc.concat({ data: { name, id: key } }).concat(
-          validEdge ? Object.keys(targetsSource).map((target) => ({
-            data: { id: `${key}_${target}`, source: key, target },
-          })) : [],
-        );
+        if (levelsKey.includes(key)) {
+          groups = this.computeElements(context[key]);
+        }
+
+        return acc
+          .concat({ data: { name, id: key } })
+          .concat(
+            validEdge ? Object.keys(targetsSource).map((target) => ({
+              data: { id: `${key}_${target}`, source: key, target },
+            })) : [],
+          )
+          .concat(groups);
       }, []);
   }
-  /* eslint-enable class-methods-use-this */
 
   render() {
     return (
