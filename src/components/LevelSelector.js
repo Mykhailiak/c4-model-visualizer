@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { TreeSelect } from 'antd';
 
-const levelsKey = ['context', 'container', 'component', 'class'];
+export const levels = ['context', 'container', 'component', 'class'];
+
 const createDataMap = (data = {}, level = 0) => (
-  Object.values(data[levelsKey[level]] || [])
+  Object.values(data[levels[level]] || [])
     .reduce((acc, element) => {
       const { name } = element;
 

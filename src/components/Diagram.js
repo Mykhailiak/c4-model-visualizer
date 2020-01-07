@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
+import { levels } from './LevelSelector';
 
 const style = [
   {
@@ -14,6 +15,17 @@ const style = [
       'text-valign': 'center',
       'background-color': '#b3c2d8',
       'text-wrap': 'ellipsis',
+    },
+  },
+  {
+    selector: ':parent',
+    style: {
+      'background-color': '#fff',
+      'background-opacity': 0.3,
+      'text-valign': 'top',
+      'text-halign': 'center',
+      'border-style': 'dashed',
+      'text-margin-y': -3,
     },
   },
   {
@@ -36,8 +48,8 @@ export default class Diagram extends Component {
     this.layout = { name: 'dagre' };
     this.cy = cytoscape({
       style,
-      userZoomingEnabled: false,
-      userPanningEnabled: false,
+      userZoomingEnabled: true,
+      userPanningEnabled: true,
       boxSelectionEnabled: false,
       autounselectify: true,
       container: document.getElementById('cy'),
@@ -55,24 +67,32 @@ export default class Diagram extends Component {
     cy.ready(() => cy.layout(layout).run());
   }
 
-  /* eslint-disable class-methods-use-this */
-  computeElements(context = {}) {
+  computeElements(context = {}, parent) {
     const keys = Object.keys(context);
 
     return keys
       .reduce((acc, key) => {
+        let groups = [];
         const { relations: { to: targetsSource } = {} } = context[key];
         const validEdge = targetsSource && Object.keys(targetsSource).some((t) => keys.includes(t));
-        const name = context[key].name || key;
+        const node = context[key];
+        const name = node.name || key;
+        const nodeContextKey = levels.find((k) => Object.prototype.hasOwnProperty.call(node, k));
 
-        return acc.concat({ data: { name, id: key } }).concat(
-          validEdge ? Object.keys(targetsSource).map((target) => ({
-            data: { id: `${key}_${target}`, source: key, target },
-          })) : [],
-        );
+        if (nodeContextKey) {
+          groups = this.computeElements(node[nodeContextKey], key);
+        }
+
+        return acc
+          .concat({ data: { name, parent, id: key } })
+          .concat(
+            validEdge ? Object.keys(targetsSource).map((target) => ({
+              data: { id: `${key}_${target}`, source: key, target },
+            })) : [],
+          )
+          .concat(groups);
       }, []);
   }
-  /* eslint-enable class-methods-use-this */
 
   render() {
     return (
