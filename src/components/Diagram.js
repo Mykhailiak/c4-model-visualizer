@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
-import { levelsKey } from './LevelSelector';
+import { levels } from './LevelSelector';
 
 const style = [
   {
@@ -37,8 +37,8 @@ export default class Diagram extends Component {
     this.layout = { name: 'dagre' };
     this.cy = cytoscape({
       style,
-      userZoomingEnabled: false,
-      userPanningEnabled: false,
+      userZoomingEnabled: true,
+      userPanningEnabled: true,
       boxSelectionEnabled: false,
       autounselectify: true,
       container: document.getElementById('cy'),
@@ -64,10 +64,12 @@ export default class Diagram extends Component {
         let groups = [];
         const { relations: { to: targetsSource } = {} } = context[key];
         const validEdge = targetsSource && Object.keys(targetsSource).some((t) => keys.includes(t));
-        const name = context[key].name || key;
+        const node = context[key];
+        const name = node.name || key;
+        const nodeContextKey = levels.find((k) => Object.prototype.hasOwnProperty.call(node, k));
 
-        if (levelsKey.includes(key)) {
-          groups = this.computeElements(context[key]);
+        if (nodeContextKey) {
+          groups = this.computeElements(node[nodeContextKey]);
         }
 
         return acc
