@@ -1,3 +1,4 @@
+# Option #1
 context:
   order-support-system:
     name: Mail Order Support System
@@ -18,6 +19,60 @@ context:
             back-end: Uses DB directly
       back-end:
         name: Application Back-end part
+        relations:
+          to:
+            front-end: Communication by using API
+  mail-processing-facility:
+    name: Mail Processing Facility System
+    caption: External
+    description: Mail processing facility with Imaging technology
+    relations:
+      to:
+        order-support-system: Uploads imaged orders
+  user:
+    name: Data Entry Specialist
+    caption: Human
+    relations:
+      to:
+        order-support-system: consumes
+
+# Option #2
+context:
+  order-support-system:
+    name: Mail Order Support System
+    description: Automates processing of imaged mail orders
+    relations:
+      to:
+        order-processing-system: posts Orders
+  order-processing-system:
+    name: Order processing
+    caption: External
+    description: Existing Order processing system
+    container:
+      database:
+        name: DB
+        description: Main DB
+        relations:
+          to:
+            back-end: Uses DB directly
+      back-end:
+        name: Application Back-end part
+        container:
+          broker:
+            name: Broker
+            class:
+              rest-service:
+                name: Rest Service
+              payments:
+                name: Payments
+                relations:
+                  to:
+                    rest-service: Knows about rest service
+          proxy-server:
+            name: Proxy Server
+            relations:
+              to:
+                broker: Knows about broker
         relations:
           to:
             front-end: Communication by using API

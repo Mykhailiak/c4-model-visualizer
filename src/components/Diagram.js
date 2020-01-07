@@ -18,6 +18,17 @@ const style = [
     },
   },
   {
+    selector: ':parent',
+    style: {
+      'background-color': '#fff',
+      'background-opacity': 0.3,
+      'text-valign': 'top',
+      'text-halign': 'center',
+      'border-style': 'dashed',
+      'text-margin-y': -3,
+    },
+  },
+  {
     selector: 'edge',
     style: {
       width: 4,
@@ -56,7 +67,7 @@ export default class Diagram extends Component {
     cy.ready(() => cy.layout(layout).run());
   }
 
-  computeElements(context = {}) {
+  computeElements(context = {}, parent) {
     const keys = Object.keys(context);
 
     return keys
@@ -69,11 +80,11 @@ export default class Diagram extends Component {
         const nodeContextKey = levels.find((k) => Object.prototype.hasOwnProperty.call(node, k));
 
         if (nodeContextKey) {
-          groups = this.computeElements(node[nodeContextKey]);
+          groups = this.computeElements(node[nodeContextKey], key);
         }
 
         return acc
-          .concat({ data: { name, id: key } })
+          .concat({ data: { name, parent, id: key } })
           .concat(
             validEdge ? Object.keys(targetsSource).map((target) => ({
               data: { id: `${key}_${target}`, source: key, target },
