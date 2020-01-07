@@ -1,1 +1,3 @@
-language: javascript
+language: node_js
+script:
+  - npm run eslint:check
