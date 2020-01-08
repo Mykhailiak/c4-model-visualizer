@@ -4,5 +4,7 @@ deploy:
   skip_cleanup: true
   github_token: 12dd1162ed705b33b6b4649f6f9d2715f60e1211
   keep_history: true
+  on:
+    branch: master
 script:
   - npm run eslint:check
