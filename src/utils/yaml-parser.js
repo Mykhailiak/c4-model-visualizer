@@ -29,7 +29,9 @@ export const parse = (input = EMPTY_STRING) => {
     const parts = input
       .replace(/^\s/, EMPTY_STRING)
       .replace(/\s$/, EMPTY_STRING)
-      .split(/\n/);
+      .replace(/^\s+$/gm, EMPTY_STRING)
+      .split(/\n/)
+      .filter(Boolean);
 
     /* eslint-disable no-restricted-syntax */
     for (const [index, row] of parts.entries()) {
