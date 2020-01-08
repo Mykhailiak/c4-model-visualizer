@@ -2,7 +2,7 @@ language: node_js
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: 6ecd652f00c40b53b43ebe46cd669928a4629299
+  github_token: 12dd1162ed705b33b6b4649f6f9d2715f60e1211
   keep_history: true
 script:
   - npm run eslint:check
