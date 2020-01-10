@@ -57,7 +57,7 @@ context:
             back-end: Uses DB directly
       back-end:
         name: Application Back-end part
-        container:
+        component:
           broker:
             name: Broker
             class:

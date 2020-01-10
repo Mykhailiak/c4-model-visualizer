@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { TreeSelect } from 'antd';
 
 export const levels = ['context', 'container', 'component', 'class'];
+export const getSuitableLevelKey = (context = {}, level = 0) => {
+  const key = levels[level];
+
+  return Object.prototype.hasOwnProperty.call(context, key) && key;
+};
 
 const createDataMap = (data = {}, level = 0) => (
   Object.values(data[levels[level]] || [])
@@ -9,7 +14,7 @@ const createDataMap = (data = {}, level = 0) => (
       const { name } = element;
       const nextLevel = level + 1;
 
-      if (levels.some((l) => Object.prototype.hasOwnProperty.call(element, l))) {
+      if (getSuitableLevelKey(element, nextLevel)) {
         acc.push({
           value: name,
           key: name,
