@@ -26,10 +26,22 @@ const createDataMap = (data = {}, level = 0) => (
       return acc;
     }, [])
 );
+const computeLevelsList = (...args) => {
+  const contextKey = 'Context';
+
+  return [
+    {
+      value: contextKey,
+      key: contextKey,
+      title: contextKey,
+      children: createDataMap(...args),
+    },
+  ];
+};
 
 export default function LevelSelector({ parsedYaml }) {
   const [value, setValue] = useState();
-  const treeData = createDataMap(parsedYaml);
+  const treeData = computeLevelsList(parsedYaml);
   const onChangeHandler = (v) => setValue(v);
 
   return (
