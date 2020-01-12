@@ -71,6 +71,8 @@ export default class Diagram extends Component {
 
   computeElements(context = {}, parent, level = 0) {
     const keys = Object.keys(context);
+    const { selectedLevel } = this.props;
+    const selectedPath = selectedLevel.split(':');
 
     return keys
       .reduce((acc, key) => {
@@ -80,8 +82,9 @@ export default class Diagram extends Component {
         const node = context[key];
         const name = node.name || key;
         const nodeContextKey = getSuitableLevelKey(node, level + 1);
+        const visibleNode = selectedPath.includes(key);
 
-        if (nodeContextKey) {
+        if (nodeContextKey && visibleNode) {
           groups = this.computeElements(node[nodeContextKey], key, level + 1);
         }
 

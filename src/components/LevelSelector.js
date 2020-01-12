@@ -8,29 +8,46 @@ export const getSuitableLevelKey = (context = {}, level = 0) => {
   return Object.prototype.hasOwnProperty.call(context, key) && key;
 };
 
-const createDataMap = (data = {}, level = 0) => (
-  Object.values(data[levels[level]] || [])
-    .reduce((acc, element) => {
+const rootLevel = levels[0];
+const createDataMap = (data = {}, level = 0, path = []) => (
+  Object.entries(data[levels[level]] || {})
+    .reduce((acc, [key, element]) => {
       const { name } = element;
       const nextLevel = level + 1;
+      const currentPath = path.concat(key);
 
       if (getSuitableLevelKey(element, nextLevel)) {
         acc.push({
-          value: name,
-          key: name,
+          key,
+          value: currentPath.join(':'),
           title: `${name} - ${levels[nextLevel]}`,
-          children: createDataMap(element, nextLevel),
+          children: createDataMap(element, nextLevel, currentPath),
         });
       }
 
       return acc;
     }, [])
 );
+const computeLevelsList = (data, key) => {
+  const title = 'Context';
 
-export default function LevelSelector({ parsedYaml }) {
-  const [value, setValue] = useState();
-  const treeData = createDataMap(parsedYaml);
-  const onChangeHandler = (v) => setValue(v);
+  return [
+    {
+      title,
+      key,
+      value: key,
+      children: createDataMap(data, 0, [key]),
+    },
+  ];
+};
+
+export default function LevelSelector({ parsedYaml, selectLevel }) {
+  const [value, setValue] = useState(rootLevel);
+  const treeData = computeLevelsList(parsedYaml, rootLevel);
+  const onChangeHandler = (v) => {
+    setValue(v);
+    selectLevel(v);
+  };
 
   return (
     <TreeSelect
@@ -39,6 +56,7 @@ export default function LevelSelector({ parsedYaml }) {
       treeData={treeData}
       placeholder="Select level"
       onChange={onChangeHandler}
+      treeDefaultExpandAll
       className="context-selection"
     />
   );

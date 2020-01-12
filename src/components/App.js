@@ -21,7 +21,10 @@ class App extends Component {
     this.state = {
       data: {},
       parsingStatus: null,
+      selectedLevel: '',
     };
+
+    this.selectLevel = this.selectLevel.bind(this);
   }
 
   updateData(input) {
@@ -30,8 +33,16 @@ class App extends Component {
       .catch(() => this.setState({ parsingStatus: 'error' }));
   }
 
+  selectLevel(value) {
+    this.setState({ selectedLevel: value });
+  }
+
   render() {
-    const { parsingStatus, data } = this.state;
+    const {
+      parsingStatus,
+      data,
+      selectedLevel,
+    } = this.state;
 
     return (
       <Layout className="app-layout">
@@ -47,8 +58,12 @@ class App extends Component {
             <Col span={16}>
               <LevelSelector
                 parsedYaml={data}
+                selectLevel={this.selectLevel}
               />
-              <Diagram data={data} />
+              <Diagram
+                data={data}
+                selectedLevel={selectedLevel}
+              />
             </Col>
           </Row>
         </Content>
