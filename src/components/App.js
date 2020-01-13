@@ -6,7 +6,7 @@ import {
 } from 'antd';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
-import LevelSelector from './LevelSelector';
+import LevelSelector, { rootLevel } from './LevelSelector';
 import { parseAsync as parseYaml } from '../utils/yaml-parser';
 
 const {
@@ -21,7 +21,7 @@ class App extends Component {
     this.state = {
       data: {},
       parsingStatus: null,
-      selectedLevel: '',
+      selectedLevel: rootLevel,
     };
 
     this.selectLevel = this.selectLevel.bind(this);
@@ -59,6 +59,7 @@ class App extends Component {
               <LevelSelector
                 parsedYaml={data}
                 selectLevel={this.selectLevel}
+                value={selectedLevel}
               />
               <Diagram
                 data={data}
