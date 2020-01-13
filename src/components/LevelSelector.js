@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TreeSelect } from 'antd';
 
 export const levels = ['context', 'container', 'component', 'class'];
@@ -8,7 +8,7 @@ export const getSuitableLevelKey = (context = {}, level = 0) => {
   return Object.prototype.hasOwnProperty.call(context, key) && key;
 };
 
-const rootLevel = levels[0];
+export const rootLevel = levels[0];
 const createDataMap = (data = {}, level = 0, path = []) => (
   Object.entries(data[levels[level]] || {})
     .reduce((acc, [key, element]) => {
@@ -41,13 +41,12 @@ const computeLevelsList = (data, key) => {
   ];
 };
 
-export default function LevelSelector({ parsedYaml, selectLevel }) {
-  const [value, setValue] = useState(rootLevel);
+export default function LevelSelector({
+  parsedYaml,
+  selectLevel,
+  value,
+}) {
   const treeData = computeLevelsList(parsedYaml, rootLevel);
-  const onChangeHandler = (v) => {
-    setValue(v);
-    selectLevel(v);
-  };
 
   return (
     <TreeSelect
@@ -55,9 +54,9 @@ export default function LevelSelector({ parsedYaml, selectLevel }) {
       dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
       treeData={treeData}
       placeholder="Select level"
-      onChange={onChangeHandler}
-      treeDefaultExpandAll
+      onChange={selectLevel}
       className="context-selection"
+      treeDefaultExpandAll
     />
   );
 }
