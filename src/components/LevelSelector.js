@@ -7,8 +7,8 @@ export const getSuitableLevelKey = (context = {}, level = 0) => {
 
   return Object.prototype.hasOwnProperty.call(context, key) && key;
 };
-
 export const rootLevel = levels[0];
+
 const createDataMap = (data = {}, level = 0, path = []) => (
   Object.entries(data[levels[level]] || {})
     .reduce((acc, [key, element]) => {
@@ -31,14 +31,14 @@ const createDataMap = (data = {}, level = 0, path = []) => (
 const computeLevelsList = (data, key) => {
   const title = 'Context';
 
-  return [
+  return (rootLevel in data) ? [
     {
       title,
       key,
       value: key,
       children: createDataMap(data, 0, [key]),
     },
-  ];
+  ] : [];
 };
 
 export default function LevelSelector({
