@@ -21,7 +21,7 @@ class App extends Component {
     this.state = {
       data: {},
       parsingStatus: null,
-      selectedLevel: rootLevel,
+      selectedLevel: null,
     };
 
     this.selectLevel = this.selectLevel.bind(this);
@@ -29,7 +29,11 @@ class App extends Component {
 
   updateData(input) {
     return parseYaml(input)
-      .then((data) => this.setState({ data, parsingStatus: 'success' }))
+      .then((data) => this.setState((state) => ({
+        data,
+        parsingStatus: 'success',
+        selectedLevel: state.selectedLevel || rootLevel,
+      })))
       .catch(() => this.setState({ parsingStatus: 'error' }));
   }
 
