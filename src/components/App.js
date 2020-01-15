@@ -3,6 +3,8 @@ import {
   Layout,
   Row,
   Col,
+  Spin,
+  Icon,
 } from 'antd';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
@@ -22,9 +24,16 @@ class App extends Component {
       data: {},
       parsingStatus: null,
       selectedLevel: null,
+      updatingState: false,
     };
 
     this.selectLevel = this.selectLevel.bind(this);
+    this.setUpdatingState = this.setUpdatingState.bind(this);
+    this.updateData = this.updateData.bind(this);
+  }
+
+  setUpdatingState(value = false) {
+    this.setState({ updatingState: value });
   }
 
   updateData(input) {
@@ -33,11 +42,13 @@ class App extends Component {
         data,
         parsingStatus: 'success',
         selectedLevel: state.selectedLevel || rootLevel,
+        updatingState: false,
       })))
       .catch(() => this.setState({
         parsingStatus: 'error',
         data: {},
         selectedLevel: null,
+        updatingState: false,
       }));
   }
 
@@ -50,17 +61,23 @@ class App extends Component {
       parsingStatus,
       data,
       selectedLevel,
+      updatingState,
     } = this.state;
+    // TODO: Move Sider to another component
+    const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
     return (
       <Layout className="app-layout">
-        <Sider width="70">Sider</Sider>
+        <Sider width="70">
+          {updatingState && <Spin style={{ width: '100%', paddingTop: 10 }} indicator={antIcon} />}
+        </Sider>
         <Content>
           <Row type="flex">
             <Col span={8} className="sidebar">
               <TextContentEditor
-                updateState={(payload) => this.updateData(payload)}
+                updateState={this.updateData}
                 status={parsingStatus}
+                setUpdatingState={this.setUpdatingState}
               />
             </Col>
             <Col span={16}>
