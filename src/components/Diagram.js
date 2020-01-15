@@ -72,7 +72,7 @@ export default class Diagram extends Component {
   computeElements(context = {}, parent, level = 0) {
     const keys = Object.keys(context);
     const { selectedLevel } = this.props;
-    const selectedPath = selectedLevel.split(':');
+    const selectedPath = (selectedLevel || '').split(':');
 
     return keys
       .reduce((acc, key) => {

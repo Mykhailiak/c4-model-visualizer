@@ -34,7 +34,11 @@ class App extends Component {
         parsingStatus: 'success',
         selectedLevel: state.selectedLevel || rootLevel,
       })))
-      .catch(() => this.setState({ parsingStatus: 'error' }));
+      .catch(() => this.setState({
+        parsingStatus: 'error',
+        data: {},
+        selectedLevel: null,
+      }));
   }
 
   selectLevel(value) {
