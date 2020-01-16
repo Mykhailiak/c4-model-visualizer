@@ -9,6 +9,7 @@ import Diagram from './Diagram';
 import LevelSelector, { rootLevel } from './LevelSelector';
 import Sidebar from './Sidebar';
 import { parseAsync as parseYaml } from '../utils/yaml-parser';
+import c4InputValidator from '../utils/c4-input-validator';
 
 class App extends Component {
   constructor() {
@@ -32,6 +33,7 @@ class App extends Component {
 
   updateData(input) {
     return parseYaml(input)
+      .then(c4InputValidator)
       .then((data) => this.setState((state) => ({
         data,
         parsingStatus: 'success',
