@@ -3,18 +3,13 @@ import {
   Layout,
   Row,
   Col,
-  Spin,
-  Icon,
 } from 'antd';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
 import LevelSelector, { rootLevel } from './LevelSelector';
+import Sidebar from './Sidebar';
 import { parseAsync as parseYaml } from '../utils/yaml-parser';
-
-const {
-  Sider,
-  Content,
-} = Layout;
+import c4InputValidator from '../utils/c4-input-validator';
 
 class App extends Component {
   constructor() {
@@ -24,7 +19,7 @@ class App extends Component {
       data: {},
       parsingStatus: null,
       selectedLevel: null,
-      updatingState: false,
+      updatingContent: false,
     };
 
     this.selectLevel = this.selectLevel.bind(this);
@@ -33,22 +28,23 @@ class App extends Component {
   }
 
   setUpdatingState(value = false) {
-    this.setState({ updatingState: value });
+    this.setState({ updatingContent: value });
   }
 
   updateData(input) {
     return parseYaml(input)
+      .then(c4InputValidator)
       .then((data) => this.setState((state) => ({
         data,
         parsingStatus: 'success',
         selectedLevel: state.selectedLevel || rootLevel,
-        updatingState: false,
+        updatingContent: false,
       })))
       .catch(() => this.setState({
         parsingStatus: 'error',
         data: {},
         selectedLevel: null,
-        updatingState: false,
+        updatingContent: false,
       }));
   }
 
@@ -61,17 +57,13 @@ class App extends Component {
       parsingStatus,
       data,
       selectedLevel,
-      updatingState,
+      updatingContent,
     } = this.state;
-    // TODO: Move Sider to another component
-    const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
     return (
       <Layout className="app-layout">
-        <Sider width="70">
-          {updatingState && <Spin style={{ width: '100%', paddingTop: 10 }} indicator={antIcon} />}
-        </Sider>
-        <Content>
+        <Sidebar updatingContent={updatingContent} />
+        <Layout.Content>
           <Row type="flex">
             <Col span={8} className="sidebar">
               <TextContentEditor
@@ -92,7 +84,7 @@ class App extends Component {
               />
             </Col>
           </Row>
-        </Content>
+        </Layout.Content>
       </Layout>
     );
   }
