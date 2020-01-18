@@ -63,16 +63,24 @@ export default class Diagram extends Component {
   componentDidUpdate() {
     const { props, cy, layout } = this;
     const { context } = props.data;
+    this.selectedPath = (props.selectedLevel || '').split(':');
     const elements = this.computeElements(context);
 
     cy.json({ elements });
     cy.ready(() => cy.layout(layout).run());
+    this.fitViewport();
+  }
+
+  fitViewport() {
+    const destination = this.selectedPath[this.selectedPath.length - 1];
+
+    if (destination) {
+      this.cy.fit(`#${destination}`);
+    }
   }
 
   computeElements(context = {}, parent, level = 0) {
     const keys = Object.keys(context);
-    const { selectedLevel } = this.props;
-    const selectedPath = (selectedLevel || '').split(':');
 
     return keys
       .reduce((acc, key) => {
@@ -82,7 +90,7 @@ export default class Diagram extends Component {
         const node = context[key];
         const name = node.name || key;
         const nodeContextKey = getSuitableLevelKey(node, level + 1);
-        const visibleNode = selectedPath.includes(key);
+        const visibleNode = this.selectedPath.includes(key);
 
         if (nodeContextKey && visibleNode) {
           groups = this.computeElements(node[nodeContextKey], key, level + 1);
