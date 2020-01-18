@@ -24,8 +24,6 @@ export default ({
   };
   const textareaRef = createRef();
   const onKeyUp = (e) => {
-    e.persist();
-
     if (e.keyCode === ENTER_KEY_CODE) {
       setText((value) => {
         const { selectionStart } = e.target;
@@ -37,16 +35,14 @@ export default ({
         const increaseDepth = (prevLine || DEPTH_INDICATOR).slice(-1) === DEPTH_INDICATOR;
         const parentOffset = (headSpaces || [''])[0].length;
         const offset = increaseDepth ? parentOffset + INDENT_SIZE : parentOffset;
-        const newSelectionStartPosition = selectionStart + offset;
+        const computedSelectionPosition = selectionStart + offset;
 
-        setCursorPosition([newSelectionStartPosition, newSelectionStartPosition]);
+        setCursorPosition([computedSelectionPosition, computedSelectionPosition]);
 
-        const result = value
+        return value
           .slice(0, selectionStart)
           .concat(' '.repeat(offset))
           .concat(value.slice(selectionStart));
-
-        return result;
       });
     }
   };
