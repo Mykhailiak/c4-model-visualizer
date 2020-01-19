@@ -24,9 +24,10 @@ export default ({
   };
   const textareaRef = createRef();
   const onKeyUp = (e) => {
-    if (e.keyCode === ENTER_KEY_CODE) {
+    const { keyCode, target } = e;
+    if (keyCode === ENTER_KEY_CODE) {
       setText((value) => {
-        const { selectionStart } = e.target;
+        const { selectionStart } = target;
         const end = selectionStart - 1;
         const prevLine = value
           .slice(value.lastIndexOf('\n', end - 1), end)
