@@ -32,6 +32,13 @@ const style = [
     selector: 'edge',
     style: {
       width: 4,
+      label: 'data(name)',
+      'font-size': 4,
+      'text-background-color': '#fff',
+      'text-background-padding': 3,
+      'text-background-opacity': 0.8,
+      'text-background-shape': 'round-rectangle',
+
       'target-arrow-shape': 'triangle',
       'line-color': '#cdd6e4',
       'target-arrow-color': '#cdd6e4',
@@ -100,7 +107,12 @@ export default class Diagram extends Component {
           .concat({ data: { name, parent, id: key } })
           .concat(
             validEdge ? Object.keys(targetsSource).map((target) => ({
-              data: { id: `${key}_${target}`, source: key, target },
+              data: {
+                target,
+                id: `${key}_${target}`,
+                source: key,
+                name: targetsSource[target],
+              },
             })) : [],
           )
           .concat(groups);
