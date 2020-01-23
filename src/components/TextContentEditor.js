@@ -49,7 +49,7 @@ export default ({
     const timerId = setTimeout(() => (text ? updateState(text) : null), DELAY);
 
     return () => clearTimeout(timerId);
-  }, [text]);
+  }, [text, updateState]);
 
   useEffect(() => {
     if (cursorPosition) {
