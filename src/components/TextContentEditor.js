@@ -5,7 +5,6 @@ const DELAY = 3000;
 const ENTER_KEY_CODE = 13;
 const INDENT_SIZE = 2;
 const DEPTH_INDICATOR = ':';
-let timerId;
 
 export default ({
   updateState,
@@ -18,9 +17,7 @@ export default ({
     const { value } = e.target;
 
     setText(value);
-    clearTimeout(timerId);
     setUpdatingState(true);
-    timerId = setTimeout(() => updateState(value), DELAY);
   };
   const textareaRef = createRef();
   const onKeyUp = (e) => {
@@ -47,6 +44,12 @@ export default ({
       });
     }
   };
+
+  useEffect(() => {
+    const timerId = setTimeout(() => (text ? updateState(text) : null), DELAY);
+
+    return () => clearTimeout(timerId);
+  }, [text]);
 
   useEffect(() => {
     if (cursorPosition) {
