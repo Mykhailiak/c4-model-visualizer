@@ -31,7 +31,7 @@ it('displays error message if provided `type` is `error`', () => {
   expect(contentStatus.contains(alert)).toEqual(true);
 });
 
-it('is empty if type is not provided', () => {
+it('doesn\'t display any content is there is no type prop', () => {
   const contentStatus = shallow(<ContentStatus />);
 
   expect(contentStatus.type()).toEqual(null);
