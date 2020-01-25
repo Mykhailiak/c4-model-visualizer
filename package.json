@@ -29,7 +29,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:ci": "npm test -- --coverage --watchAll=false && cat ./tests/coverage/lcov.info | coveralls",
+    "test:ci": "npm test -- --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
     "eject": "react-scripts eject",
     "eslint:check": "eslint ./src",
     "eslint:fix": "eslint ./src --fix",
