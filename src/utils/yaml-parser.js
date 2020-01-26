@@ -6,8 +6,8 @@ const EMPTY_STRING = '';
  * @param {string} input
  * @returns {boolean}
  */
-const validate = (input) => (
-  ![
+export const validate = (input) => (
+  [
     input,
     input.includes(':'),
   ].every(Boolean)
@@ -21,7 +21,7 @@ const validate = (input) => (
  */
 export const parse = (input = EMPTY_STRING) => {
   try {
-    if (validate(input)) {
+    if (!validate(input)) {
       throw new Error('Invalid value');
     }
 
