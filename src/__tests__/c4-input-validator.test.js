@@ -9,6 +9,6 @@ it('returns input if input passed validation', () => {
 });
 
 it('throws an error if `context` does not exist', () => {
-  expect(() => validate({})).toThrow(SyntaxError);
-  expect(() => validate({ key: 'prop' })).toThrow(SyntaxError);
+  expect(() => validate({})).toThrow(SyntaxError('Context is mandatory!'));
+  expect(() => validate({ key: 'prop' })).toThrow(SyntaxError('Context is mandatory!'));
 });
