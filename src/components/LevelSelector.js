@@ -9,7 +9,7 @@ export const getSuitableLevelKey = (context = {}, level = 0) => {
 };
 export const rootLevel = levels[0];
 
-const createDataMap = (data = {}, level = 0, path = []) => (
+export const createDataMap = (data = {}, level = 0, path = []) => (
   Object.entries(data[levels[level]] || {})
     .reduce((acc, [key, element]) => {
       const { name } = element;
@@ -28,7 +28,7 @@ const createDataMap = (data = {}, level = 0, path = []) => (
       return acc;
     }, [])
 );
-const computeLevelsList = (data, key) => {
+export const computeLevelsList = (data, key) => {
   const title = 'Context';
 
   return (rootLevel in data) ? [
