@@ -13,10 +13,18 @@ it('returns needed key if it does exist in object', () => {
   expect(getSuitableLevelKey({ class: {} }, 3)).toEqual('class');
 });
 
-it('returns `false` if there is no needed key on specified level', () => {
+it('returns falsy value if there is no needed key on specified level', () => {
   expect(getSuitableLevelKey({ foo: {} }, 0)).toBeFalsy();
   expect(getSuitableLevelKey({ component: {} }, 1)).toBeFalsy();
   expect(getSuitableLevelKey({ container: {} }, 0)).toBeFalsy();
+});
+
+it('returns falsy value if context and/or level are/is not provided', () => {
+  expect(getSuitableLevelKey()).toBeFalsy();
+});
+
+it('considers default value of the level as `0`', () => {
+  expect(getSuitableLevelKey({ context: {} })).toEqual('context');
 });
 
 it('returns computed object which is used by `TreeSelect` component', () => {
@@ -172,4 +180,8 @@ it('provides `TreeSelect` needed props (using nested elements)', () => {
     transitionName: 'slide-up',
     choiceTransitionName: 'zoom',
   });
+});
+
+it('returns an empty array if there is no data according to level and provided context', () => {
+  expect(createDataMap({}, 0)).toEqual([]);
 });
