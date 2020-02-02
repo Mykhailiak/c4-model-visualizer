@@ -1,0 +1,77 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import cytoscape from 'cytoscape';
+import Diagram from '../components/Diagram';
+
+jest.mock('cytoscape', () => {
+  const cytoscapeMock = jest.fn();
+  cytoscapeMock.api = {
+    json: jest.fn(),
+    ready: jest.fn(),
+    fit: jest.fn(),
+    layout: { run: jest.fn() },
+  };
+  cytoscapeMock.use = jest.fn();
+
+  return cytoscapeMock.mockReturnValue(cytoscapeMock.api);
+});
+
+afterEach(() => {
+  cytoscape.api.json.mockClear();
+  cytoscape.api.ready.mockClear();
+  cytoscape.api.fit.mockClear();
+  cytoscape.api.layout.run.mockClear();
+  cytoscape.mockClear();
+});
+
+it('sets up custom cytoscape diagram layout', () => {
+  shallow(
+    <Diagram
+      data={{}}
+      selectedLevel="context"
+    />,
+  );
+
+  expect(cytoscape.use).toHaveBeenCalled();
+});
+
+it('initializes cytoscape instance', () => {
+  shallow(
+    <Diagram
+      data={{}}
+      selectedLevel="context"
+    />,
+  );
+
+  expect(cytoscape).toHaveBeenCalledWith({
+    style: expect.any(Array),
+    maxZoom: 6,
+    minZoom: 1,
+    userZoomingEnabled: true,
+    userPanningEnabled: true,
+    boxSelectionEnabled: false,
+    autounselectify: true,
+    container: null, // it's always null in test mode
+    elements: [],
+    layout: { name: 'dagre' },
+  });
+});
+
+it('renders diagram and fits view according right level', () => {
+  const diagram = shallow(
+    <Diagram
+      data={{}}
+      selectedLevel="context"
+    />,
+  );
+
+  diagram.setProps({
+    data: { context: { foo: { name: 'Foo' } } },
+  });
+
+  expect(cytoscape.api.json).toHaveBeenCalledWith({
+    elements: [{ data: { id: 'foo', name: 'Foo', parent: undefined } }],
+  });
+  expect(cytoscape.api.ready).toHaveBeenCalledWith(expect.any(Function));
+  expect(cytoscape.api.fit).toHaveBeenCalledWith('#context');
+});
