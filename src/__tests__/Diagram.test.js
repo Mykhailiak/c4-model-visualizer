@@ -75,3 +75,57 @@ it('renders diagram and fits view according right level', () => {
   expect(cytoscape.api.ready).toHaveBeenCalledWith(expect.any(Function));
   expect(cytoscape.api.fit).toHaveBeenCalledWith('#context');
 });
+
+it('renders diagram and does not fit view if selected level is not provided', () => {
+  const diagram = shallow(
+    <Diagram
+      data={{}}
+      selectedLevel={undefined}
+    />,
+  );
+
+  diagram.setProps({
+    data: { context: { foo: { name: 'Foo' } } },
+  });
+
+  expect(cytoscape.api.json).toHaveBeenCalledWith({
+    elements: [{ data: { id: 'foo', name: 'Foo', parent: undefined } }],
+  });
+  expect(cytoscape.api.ready).toHaveBeenCalledWith(expect.any(Function));
+  expect(cytoscape.api.fit.mock.calls.length).toBe(0);
+});
+
+it('renders elements which is related', () => {
+  const diagram = shallow(
+    <Diagram
+      data={{}}
+      selectedLevel="context"
+    />,
+  );
+  const parent = undefined;
+
+  diagram.setProps({
+    data: {
+      context: {
+        foo: { name: 'Foo', relations: { to: { bar: 'Knows about bar' } } },
+        bar: { name: 'Bar' },
+      },
+    },
+  });
+
+  expect(cytoscape.api.json).toHaveBeenCalledWith({
+    elements: [
+      { data: { id: 'foo', name: 'Foo', parent } },
+      {
+        data: {
+          parent,
+          id: 'foo_bar',
+          name: 'Knows about bar',
+          source: 'foo',
+          target: 'bar',
+        },
+      },
+      { data: { id: 'bar', name: 'Bar', parent } },
+    ],
+  });
+});
