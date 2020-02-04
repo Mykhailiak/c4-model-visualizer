@@ -129,3 +129,29 @@ it('renders elements which is related', () => {
     ],
   });
 });
+
+it('renders nodes with key as a name if `name` does not exist', () => {
+  const diagram = shallow(
+    <Diagram
+      data={{}}
+      selectedLevel="context"
+    />,
+  );
+  const parent = undefined;
+
+  diagram.setProps({
+    data: {
+      context: {
+        foo: {},
+        bar: {},
+      },
+    },
+  });
+
+  expect(cytoscape.api.json).toHaveBeenCalledWith({
+    elements: [
+      { data: { id: 'foo', name: 'foo', parent } },
+      { data: { id: 'bar', name: 'bar', parent } },
+    ],
+  });
+});
