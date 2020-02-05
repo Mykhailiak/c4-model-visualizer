@@ -155,3 +155,53 @@ it('renders nodes with key as a name if `name` does not exist', () => {
     ],
   });
 });
+
+it('it renders sub-levels', () => {
+  const diagram = shallow(
+    <Diagram
+      data={{}}
+      selectedLevel="context"
+    />,
+  );
+  const parent = undefined;
+
+  diagram.setProps({
+    data: {
+      context: {
+        foo: {
+          name: 'Foo',
+          container: {
+            foo1: {
+              name: 'Foo1',
+            },
+          },
+        },
+        bar: {
+          name: 'Bar',
+          relations: {
+            to: {
+              foo: 'Knows about foo',
+            },
+          },
+        },
+      },
+    },
+    selectedLevel: 'foo:foo1',
+  });
+
+  expect(cytoscape.api.json).toHaveBeenCalledWith({
+    elements: [
+      { data: { id: 'foo', name: 'Foo', parent } },
+      { data: { id: 'foo1', name: 'Foo1', parent: 'foo' } },
+      { data: { id: 'bar', name: 'Bar', parent } },
+      {
+        data: {
+          id: 'bar_foo',
+          name: 'Knows about foo',
+          source: 'bar',
+          target: 'foo',
+        },
+      },
+    ],
+  });
+});
