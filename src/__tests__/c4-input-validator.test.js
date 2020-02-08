@@ -12,3 +12,7 @@ it('throws an error if `context` does not exist', () => {
   expect(() => validate({})).toThrow(SyntaxError('Context is mandatory!'));
   expect(() => validate({ key: 'prop' })).toThrow(SyntaxError('Context is mandatory!'));
 });
+
+it('throws an error if passed value is `undefined`', () => {
+  expect(() => validate()).toThrow(SyntaxError('Context is mandatory!'));
+});
