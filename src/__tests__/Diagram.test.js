@@ -9,6 +9,7 @@ jest.mock('cytoscape', () => {
     json: jest.fn(),
     ready: jest.fn(),
     fit: jest.fn(),
+    on: jest.fn(),
     layout: { run: jest.fn() },
   };
   cytoscapeMock.use = jest.fn();
