@@ -52,6 +52,8 @@ cytoscape.use(dagre);
 
 export default class Diagram extends Component {
   componentDidMount() {
+    const { props } = this;
+
     this.layout = { name: 'dagre' };
     this.cy = cytoscape({
       style,
@@ -65,6 +67,14 @@ export default class Diagram extends Component {
       elements: [],
       layout: this.layout,
     });
+
+    this.cy.on('click', 'node', (e) => {
+      const { selectionId, hasChild } = e.target.data();
+
+      if (hasChild) {
+        props.selectLevel(selectionId);
+      }
+    });
   }
 
   componentDidUpdate() {
@@ -76,14 +86,6 @@ export default class Diagram extends Component {
     cy.json({ elements });
     cy.ready(() => cy.layout(layout).run());
     this.fitViewport();
-
-    this.cy.nodes().on('click', (e) => {
-      const { selectionId, hasChild } = e.target.data();
-
-      if (hasChild) {
-        props.selectLevel(selectionId);
-      }
-    });
   }
 
   fitViewport() {
