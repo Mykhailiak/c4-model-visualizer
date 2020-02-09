@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
-import { getSuitableLevelKey } from './LevelSelector';
+import { getSuitableLevelKey, levels } from './LevelSelector';
 
 const style = [
   {
@@ -76,6 +76,14 @@ export default class Diagram extends Component {
     cy.json({ elements });
     cy.ready(() => cy.layout(layout).run());
     this.fitViewport();
+
+    this.cy.nodes().on('click', (e) => {
+      const { selectionId, hasChild } = e.target.data();
+
+      if (hasChild) {
+        props.selectLevel(selectionId);
+      }
+    });
   }
 
   fitViewport() {
@@ -86,7 +94,7 @@ export default class Diagram extends Component {
     }
   }
 
-  computeElements(context = {}, parent, level = 0) {
+  computeElements(context = {}, parent, level = 0, selectionPath = levels[0]) {
     const keys = Object.keys(context);
 
     return keys
@@ -96,15 +104,24 @@ export default class Diagram extends Component {
         const validEdge = targetsSource && Object.keys(targetsSource).some((t) => keys.includes(t));
         const node = context[key];
         const name = node.name || key;
+        const selectionId = `${selectionPath}:${key}`;
         const nodeContextKey = getSuitableLevelKey(node, level + 1);
         const visibleNode = this.selectedPath.includes(key);
 
         if (nodeContextKey && visibleNode) {
-          groups = this.computeElements(node[nodeContextKey], key, level + 1);
+          groups = this.computeElements(node[nodeContextKey], key, level + 1, selectionId);
         }
 
         return acc
-          .concat({ data: { name, parent, id: key } })
+          .concat({
+            data: {
+              name,
+              parent,
+              selectionId,
+              hasChild: Boolean(nodeContextKey),
+              id: key,
+            },
+          })
           .concat(
             validEdge ? Object.keys(targetsSource).map((target) => ({
               data: {
