@@ -109,8 +109,9 @@ export default class Diagram extends Component {
         const selectionId = `${selectionPath}:${key}`;
         const nodeContextKey = getSuitableLevelKey(node, level + 1);
         const visibleNode = this.selectedPath.includes(key);
+        const hasChild = Boolean(nodeContextKey);
 
-        if (nodeContextKey && visibleNode) {
+        if (hasChild && visibleNode) {
           groups = this.computeElements(node[nodeContextKey], key, level + 1, selectionId);
         }
 
@@ -119,8 +120,8 @@ export default class Diagram extends Component {
             data: {
               name,
               parent,
+              hasChild,
               selectionId,
-              hasChild: Boolean(nodeContextKey),
               id: key,
             },
           })

@@ -71,7 +71,15 @@ it('renders diagram and fits view according right level', () => {
   });
 
   expect(cytoscape.api.json).toHaveBeenCalledWith({
-    elements: [{ data: { id: 'foo', name: 'Foo', parent: undefined } }],
+    elements: [{
+      data: {
+        id: 'foo',
+        name: 'Foo',
+        parent: undefined,
+        hasChild: false,
+        selectionId: 'context:foo',
+      },
+    }],
   });
   expect(cytoscape.api.ready).toHaveBeenCalledWith(expect.any(Function));
   expect(cytoscape.api.fit).toHaveBeenCalledWith('#context');
@@ -90,7 +98,15 @@ it('renders diagram and does not fit view if selected level is not provided', ()
   });
 
   expect(cytoscape.api.json).toHaveBeenCalledWith({
-    elements: [{ data: { id: 'foo', name: 'Foo', parent: undefined } }],
+    elements: [{
+      data: {
+        id: 'foo',
+        name: 'Foo',
+        parent: undefined,
+        hasChild: false,
+        selectionId: 'context:foo',
+      },
+    }],
   });
   expect(cytoscape.api.ready).toHaveBeenCalledWith(expect.any(Function));
   expect(cytoscape.api.fit.mock.calls.length).toBe(0);
@@ -116,7 +132,15 @@ it('renders elements which is related', () => {
 
   expect(cytoscape.api.json).toHaveBeenCalledWith({
     elements: [
-      { data: { id: 'foo', name: 'Foo', parent } },
+      {
+        data: {
+          id: 'foo',
+          name: 'Foo',
+          parent,
+          hasChild: false,
+          selectionId: 'context:foo',
+        },
+      },
       {
         data: {
           parent,
@@ -126,7 +150,15 @@ it('renders elements which is related', () => {
           target: 'bar',
         },
       },
-      { data: { id: 'bar', name: 'Bar', parent } },
+      {
+        data: {
+          id: 'bar',
+          name: 'Bar',
+          parent,
+          hasChild: false,
+          selectionId: 'context:bar',
+        },
+      },
     ],
   });
 });
@@ -151,8 +183,24 @@ it('renders nodes with key as a name if `name` does not exist', () => {
 
   expect(cytoscape.api.json).toHaveBeenCalledWith({
     elements: [
-      { data: { id: 'foo', name: 'foo', parent } },
-      { data: { id: 'bar', name: 'bar', parent } },
+      {
+        data: {
+          id: 'foo',
+          name: 'foo',
+          parent,
+          hasChild: false,
+          selectionId: 'context:foo',
+        },
+      },
+      {
+        data: {
+          id: 'bar',
+          name: 'bar',
+          parent,
+          hasChild: false,
+          selectionId: 'context:bar',
+        },
+      },
     ],
   });
 });
@@ -192,9 +240,33 @@ it('it renders sub-levels', () => {
 
   expect(cytoscape.api.json).toHaveBeenCalledWith({
     elements: [
-      { data: { id: 'foo', name: 'Foo', parent } },
-      { data: { id: 'foo1', name: 'Foo1', parent: 'foo' } },
-      { data: { id: 'bar', name: 'Bar', parent } },
+      {
+        data: {
+          id: 'foo',
+          name: 'Foo',
+          parent,
+          hasChild: true,
+          selectionId: 'context:foo',
+        },
+      },
+      {
+        data: {
+          id: 'foo1',
+          name: 'Foo1',
+          parent: 'foo',
+          hasChild: false,
+          selectionId: 'context:foo:foo1',
+        },
+      },
+      {
+        data: {
+          id: 'bar',
+          name: 'Bar',
+          parent,
+          hasChild: false,
+          selectionId: 'context:bar',
+        },
+      },
       {
         data: {
           id: 'bar_foo',
