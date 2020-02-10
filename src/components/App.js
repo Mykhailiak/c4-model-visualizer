@@ -80,6 +80,7 @@ class App extends Component {
               />
               <Diagram
                 data={data}
+                selectLevel={this.selectLevel}
                 selectedLevel={selectedLevel}
               />
             </Col>
