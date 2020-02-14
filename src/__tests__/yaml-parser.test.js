@@ -2,7 +2,7 @@ import {
   parse,
   validate,
   parseAsync,
-} from '../utils/yaml-parser';
+} from 'c4-model-visualizer-core/utils/yaml-parser';
 
 it('returns false if `input` does not exist or does not have `:` char', () => {
   expect(validate('')).toBeFalsy();
