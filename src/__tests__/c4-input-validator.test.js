@@ -1,4 +1,4 @@
-import validate from '../utils/c4-input-validator';
+import validate from 'c4-model-visualizer-core/utils/c4-input-validator';
 
 it('returns input if input passed validation', () => {
   const o1 = { context: {} };
