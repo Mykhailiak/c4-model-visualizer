@@ -68,6 +68,9 @@
       "src/**/*.js",
       "!src/**/index.js",
       "!src/**/serviceWorker.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!c4-model-visualizer-core/)"
     ]
   }
 }
