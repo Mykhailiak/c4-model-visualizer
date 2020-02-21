@@ -24,16 +24,10 @@ export default class Diagram extends Component {
   componentDidUpdate() {
     const { props } = this;
     const { context } = props.data;
-    this.selectedPath = (props.selectedLevel || '').split(':');
+    const selectedPath = (props.selectedLevel || '').split(':');
+    const selectedLevel = selectedPath[selectedPath.length - 1];
 
-    this.diagram.update(context, this.selectedPath);
-    this.fitViewport();
-  }
-
-  fitViewport() {
-    const destination = this.selectedPath[this.selectedPath.length - 1];
-
-    this.diagram.fitViewport(destination);
+    this.diagram.update(context, selectedPath, selectedLevel);
   }
 
   render() {
