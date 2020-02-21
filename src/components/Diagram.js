@@ -25,9 +25,8 @@ export default class Diagram extends Component {
     const { props } = this;
     const { context } = props.data;
     this.selectedPath = (props.selectedLevel || '').split(':');
-    const elements = this.computeElements(context);
 
-    this.diagram.update(elements);
+    this.diagram.update(context, this.selectedPath);
     this.fitViewport();
   }
 
@@ -35,10 +34,6 @@ export default class Diagram extends Component {
     const destination = this.selectedPath[this.selectedPath.length - 1];
 
     this.diagram.fitViewport(destination);
-  }
-
-  computeElements(context = {}, parent, level = 0, selectionPath = levels[0]) {
-    return this.diagram.computeElements(context, parent, level, this.selectedPath, selectionPath);
   }
 
   render() {
