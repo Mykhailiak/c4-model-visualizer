@@ -1,38 +1,43 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import DiagramVisualizer from 'c4-model-visualizer-core/diagram';
 import { getSuitableLevelKey, levels } from './LevelSelector';
 
-export default class Diagram extends Component {
-  componentDidMount() {
-    const { props } = this;
-    this.diagram = new DiagramVisualizer(
+const Diagram = ({
+  selectLevel,
+  data,
+  selectedLevel,
+}) => {
+  const containerId = 'cy';
+  const diagram = useRef(null);
+
+  useEffect(() => {
+    diagram.current = new DiagramVisualizer(
       levels,
       getSuitableLevelKey,
       {
-        containerId: 'cy',
+        containerId,
         onClick: (e) => {
           const { selectionId, hasChild } = e.target.data();
 
           if (hasChild) {
-            props.selectLevel(selectionId);
+            selectLevel(selectionId);
           }
         },
       },
     );
-  }
+  }, [selectLevel]);
 
-  componentDidUpdate() {
-    const { props } = this;
-    const { context } = props.data;
-    const selectedPath = (props.selectedLevel || '').split(':');
-    const selectedLevel = selectedPath[selectedPath.length - 1];
+  useEffect(() => {
+    const { context } = data;
+    const selectedPath = (selectedLevel || '').split(':');
+    const finalSelectedPath = selectedPath[selectedPath.length - 1];
 
-    this.diagram.update(context, selectedPath, selectedLevel);
-  }
+    diagram.current.update(context, selectedPath, finalSelectedPath);
+  }, [diagram, data, selectedLevel]);
 
-  render() {
-    return (
-      <div id="cy" />
-    );
-  }
-}
+  return (
+    <div id={containerId} />
+  );
+};
+
+export default Diagram;
