@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import DiagramVisualizer from 'c4-model-visualizer-core/diagram';
 import { getSuitableLevelKey, levels } from './LevelSelector';
 
@@ -40,4 +40,4 @@ const Diagram = ({
   );
 };
 
-export default Diagram;
+export default memo(Diagram);

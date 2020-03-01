@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { TreeSelect } from 'antd';
 
 export const levels = ['context', 'container', 'component', 'class'];
@@ -41,11 +41,11 @@ export const computeLevelsList = (data, key) => {
   ] : [];
 };
 
-export default function LevelSelector({
+const LevelSelector = ({
   parsedYaml,
   selectLevel,
   value,
-}) {
+}) => {
   const treeData = computeLevelsList(parsedYaml, rootLevel);
 
   return (
@@ -59,4 +59,6 @@ export default function LevelSelector({
       treeDefaultExpandAll
     />
   );
-}
+};
+
+export default memo(LevelSelector);
