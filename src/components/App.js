@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Layout,
-  Row,
-  Col,
-} from 'antd';
+import { Layout, Row, Col } from 'antd';
 import c4InputValidator from 'c4-model-visualizer-core/utils/c4-input-validator';
 import { parseAsync as parseYaml } from 'c4-model-visualizer-core/utils/yaml-parser';
 import TextContentEditor from './TextContentEditor';
@@ -17,7 +13,7 @@ const App = () => {
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [updatingContent, setUpdatingContent] = useState(false);
 
-  const updateData = (input) => (
+  const updateData = (input) =>
     parseYaml(input)
       .then(c4InputValidator)
       .then((processedData) => {
@@ -31,8 +27,7 @@ const App = () => {
         setParsingStatus('error');
         setSelectedLevel(null);
         setUpdatingContent(false);
-      })
-  );
+      });
 
   return (
     <Layout className="app-layout">
