@@ -49,7 +49,8 @@ export default ({
     const timerId = setTimeout(() => (text ? updateState(text) : null), DELAY);
 
     return () => clearTimeout(timerId);
-  }, [text, updateState]);
+    // eslint-disable-next-line
+  }, [text]); 
 
   useEffect(() => {
     if (cursorPosition) {
