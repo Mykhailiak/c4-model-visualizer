@@ -66,6 +66,6 @@ code {
   margin: 10px;
 }
 
-#cy {
+#cy, .error-bounday {
   height: calc(100vh - 52px);
 }
