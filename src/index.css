@@ -66,6 +66,10 @@ code {
   margin: 10px;
 }
 
-#cy, .error-bounday {
+.error-boundary {
+  padding: 0 3%;
+}
+
+#cy, .error-boundary {
   height: calc(100vh - 52px);
 }
