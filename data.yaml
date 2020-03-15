@@ -89,3 +89,22 @@ context:
     relations:
       to:
         order-support-system: consumes
+
+# Option 3
+context:
+  order-support-system:
+    name: Mail Order Support System
+    description: Automates processing of imaged mail orders
+    relations:
+      to:
+        back-end: posts Orders
+  order-processing-system:
+    name: Order processing
+    caption: External
+    description: Existing Order processing system
+    container:
+      database:
+        name: DB
+        description: Main DB
+      back-end:
+        name: Application Back-end part

@@ -19,7 +19,8 @@ const Diagram = ({ selectLevel, data, selectedLevel, onUpdateError }) => {
 
   useEffect(() => {
     diagram.current = createDiagramVisualizerInstance();
-  }, [selectLevel]);
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     const { context } = data;
@@ -35,6 +36,7 @@ const Diagram = ({ selectLevel, data, selectedLevel, onUpdateError }) => {
       onUpdateError(e);
       diagram.current = createDiagramVisualizerInstance();
     }
+    // eslint-disable-next-line
   }, [diagram, data, selectedLevel]);
 
   return <div id={containerId} />;
