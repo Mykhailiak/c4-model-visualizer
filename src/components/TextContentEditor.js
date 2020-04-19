@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createRef } from 'react';
 import ContentStatus from './ContentStatus';
 
-const DELAY = 3000;
+const DELAY = process.env.NODE_ENV !== 'PRODUCTION' ? 0 : 3000;
 const ENTER_KEY_CODE = 13;
 const INDENT_SIZE = 2;
 const DEPTH_INDICATOR = ':';

@@ -3,6 +3,9 @@ context:
   order-support-system:
     name: Mail Order Support System
     description: Automates processing of imaged mail orders
+    container:
+      front-end:
+        name: Front-end
     relations:
       to:
         order-processing-system: posts Orders

@@ -29,8 +29,9 @@ const App = () => {
         setSelectedLevel(null);
         setUpdatingContent(false);
       });
-  const onUpdateError = ({ message }) => {
-    antdMessage.error(messageBuilder(message));
+  const onUpdateError = (e) => {
+    console.error(e);
+    antdMessage.error(messageBuilder(e.message));
   };
 
   return (
