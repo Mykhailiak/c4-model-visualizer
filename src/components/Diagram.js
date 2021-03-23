@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, memo } from 'react';
-import DiagramVisualizer from 'c4-model-visualizer-core/diagram';
+import DiagramVisualizer from './DiagramVisualizer';
 import { getSuitableLevelKey, levels } from './LevelSelector';
 
 const Diagram = ({ selectLevel, data, selectedLevel, onUpdateError }) => {

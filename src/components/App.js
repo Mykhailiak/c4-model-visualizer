@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Layout, Row, Col, message as antdMessage } from 'antd';
-import c4InputValidator from 'c4-model-visualizer-core/utils/c4-input-validator';
-import { parseAsync as parseYaml } from 'c4-model-visualizer-core/utils/yaml-parser';
+import c4InputValidator from '../utils/c4-input-validator';
+import { parseAsync as parseYaml } from '../utils/yaml-parser';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
 import LevelSelector, { rootLevel } from './LevelSelector';
 import Sidebar from './Sidebar';
-import { messageBuilder } from '../utils';
+import { messageBuilder } from '../utils/error-adapter';
 
 const App = () => {
   const [data, setData] = useState({});
