@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Row, Col, message as antdMessage } from 'antd';
 import c4InputValidator from '../utils/c4-input-validator';
 import { parseAsync as parseYaml } from '../utils/yaml-parser';
@@ -7,12 +7,24 @@ import Diagram from './Diagram';
 import LevelSelector, { rootLevel } from './LevelSelector';
 import Sidebar from './Sidebar';
 import { messageBuilder } from '../utils/error-adapter';
+import mock from '../mock.json';
+
+const isDevEnv = process.env.NODE_ENV === 'development';
 
 const App = () => {
   const [data, setData] = useState({});
   const [parsingStatus, setParsingStatus] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [updatingContent, setUpdatingContent] = useState(false);
+
+  useEffect(() => {
+    if (isDevEnv) {
+        setData(mock);
+        setParsingStatus('success');
+        setSelectedLevel(selectedLevel || rootLevel);
+        setUpdatingContent(false);
+    }
+  }, []);
 
   const updateData = (input) =>
     parseYaml(input)

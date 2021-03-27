@@ -1,0 +1,88 @@
+{
+  "context": {
+    "order-support-system": {
+      "name": "Mail Order Support System",
+      "description": "Automates processing of imaged mail orders",
+      "container": {
+        "front-end": {
+          "name": "Front-end"
+        }
+      },
+      "relations": {
+        "to": {
+          "order-processing-system": "posts Orders"
+        }
+      }
+    },
+    "order-processing-system": {
+      "name": "Order processing",
+      "caption": "External",
+      "description": "Existing Order processing system",
+      "relations": {
+        "to": {
+          "order-support-system": "description"
+        }
+      },
+      "container": {
+        "database": {
+          "name": "DB",
+          "description": "Main DB",
+          "relations": {
+            "to": {
+              "back-end": "Uses DB directly"
+            }
+          }
+        },
+        "back-end": {
+          "name": "Application Back-end part",
+          "relations": {
+            "to": {
+              "front-end": "Communication by using API"
+            }
+          }
+        },
+        "broker": {
+          "name": "Broker"
+        },
+        "broker-user": {
+          "name": "Broker",
+          "relations": {
+            "to": {
+              "broker": "Use Broker"
+            }
+          }
+        },
+        "broker2": {
+          "name": "Broker2"
+        },
+        "broker-user2": {
+          "name": "Broker2",
+          "relations": {
+            "to": {
+              "broker2": "Use Broker"
+            }
+          }
+        }
+      }
+    },
+    "mail-processing-facility": {
+      "name": "Mail Processing Facility System",
+      "caption": "External",
+      "description": "Mail processing facility with Imaging technology",
+      "relations": {
+        "to": {
+          "order-support-system": "Uploads imaged orders"
+        }
+      }
+    },
+    "user": {
+      "name": "Data Entry Specialist",
+      "caption": "Human",
+      "relations": {
+        "to": {
+          "order-support-system": "consumes"
+        }
+      }
+    }
+  }
+}
