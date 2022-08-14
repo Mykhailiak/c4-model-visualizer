@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert } from 'antd';
 
 const messages = {
-  success: 'Valid input',
+  success: 'Input is valid',
   error: 'Syntax error',
 };
 
