@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Row, Col, message as antdMessage } from 'antd';
 import c4InputValidator from '../utils/c4-input-validator';
-import { parseAsync as parseYaml } from '../utils/yaml-parser';
+import { parseAsync as parseYaml } from '../services/yaml-parser';
 import TextContentEditor from './TextContentEditor';
 import Diagram from './Diagram';
 import LevelSelector, { rootLevel } from './LevelSelector';

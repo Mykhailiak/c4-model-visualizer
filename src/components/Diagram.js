@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, memo } from 'react';
-import DiagramVisualizer from './DiagramVisualizer';
+import DiagramVisualizer from '../services/diagram-visualizer';
 import { getSuitableLevelKey, levels } from './LevelSelector';
 
 function Diagram({ selectLevel, data, selectedLevel, onUpdateError }) {
@@ -36,7 +36,6 @@ function Diagram({ selectLevel, data, selectedLevel, onUpdateError }) {
       onUpdateError(e);
       diagram.current = createDiagramVisualizerInstance();
     }
-    // eslint-disable-next-line
   }, [diagram, data, selectedLevel]);
 
   return <div id={containerId} />;

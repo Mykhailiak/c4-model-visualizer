@@ -1,7 +1,7 @@
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
-import style from './diagram-styles';
-import { bindRegistriesBySelectedLevel } from '../utils/registries';
+import style from '../utils/diagram-styles';
+import { bindRegistriesBySelectedLevel } from './registries';
 
 cytoscape.use(dagre);
 
