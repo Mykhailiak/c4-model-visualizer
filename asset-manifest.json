@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/c4-model-visualizer/static/css/main.e4778c15.css",
+    "main.js": "/c4-model-visualizer/static/js/main.65f24264.js",
+    "index.html": "/c4-model-visualizer/index.html",
+    "main.e4778c15.css.map": "/c4-model-visualizer/static/css/main.e4778c15.css.map",
+    "main.65f24264.js.map": "/c4-model-visualizer/static/js/main.65f24264.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e4778c15.css",
+    "static/js/main.65f24264.js"
+  ]
+}
