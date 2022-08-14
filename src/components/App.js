@@ -42,6 +42,7 @@ export default function App() {
         setUpdatingContent(false);
       });
   const onUpdateError = (e) => {
+    // eslint-disable-next-line no-console
     console.error(e);
     antdMessage.error(messageBuilder(e.message));
   };
