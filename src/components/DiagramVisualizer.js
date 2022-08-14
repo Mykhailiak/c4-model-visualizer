@@ -5,7 +5,7 @@ import { bindRegistriesBySelectedLevel } from '../utils/registries';
 
 cytoscape.use(dagre);
 
-const classifyEdge = (edge, list, skipEdgeDuplication) => {
+function classifyEdge(edge, list, skipEdgeDuplication) {
   return list
     .filter((item) => item !== edge)
     .some(
@@ -17,9 +17,9 @@ const classifyEdge = (edge, list, skipEdgeDuplication) => {
     )
     ? ['circular-dep-edge']
     : [];
-};
+}
 
-const computeEdges = (context, availableNodes) => {
+function computeEdges(context, availableNodes) {
   const relations = bindRegistriesBySelectedLevel(context, availableNodes);
   const uniqueRealtions = relations.reduce((acc, r) => {
     const id = `${r.key}_${r.target}`;
@@ -43,7 +43,7 @@ const computeEdges = (context, availableNodes) => {
   }, {});
 
   return Object.values(uniqueRealtions);
-};
+}
 
 class DiagramVisualizer {
   constructor(
@@ -72,7 +72,7 @@ class DiagramVisualizer {
   }
 
   update(context, selectedPath, selectedLevel) {
-    const nodes = this.computeElements(context, selectedPath);
+    const nodes = this.computeElements({ context, selectedPath });
     const availableNodes = nodes.map((n) => n.data.id);
     const edges = computeEdges(context, availableNodes);
     const elements = nodes.concat(edges);
@@ -88,13 +88,13 @@ class DiagramVisualizer {
     }
   }
 
-  computeElements(
+  computeElements({
     context = {},
     selectedPath,
     level = 0,
     parent,
     selectionPath = this.levels[0],
-  ) {
+  }) {
     const keys = Object.keys(context);
 
     return keys.reduce((acc, key) => {
@@ -107,13 +107,13 @@ class DiagramVisualizer {
       const hasChild = Boolean(nodeContextKey);
 
       if (hasChild && visibleNode) {
-        groups = this.computeElements(
-          node[nodeContextKey],
+        groups = this.computeElements({
+          context: node[nodeContextKey],
           selectedPath,
-          level + 1,
-          key,
-          selectionId,
-        );
+          level: level + 1,
+          parent: key,
+          selectionPath: selectionId,
+        });
       }
 
       return acc

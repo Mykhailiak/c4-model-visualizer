@@ -2,9 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '../components/App';
 
-jest.mock('../components/Diagram', () => function DummyDiagram() {
-  return <div id="dummy-diagram" />;
-});
+jest.mock(
+  '../components/Diagram',
+  () =>
+    function DummyDiagram() {
+      return <div id="dummy-diagram" />;
+    },
+);
 
 let container;
 

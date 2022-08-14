@@ -2,7 +2,7 @@ import React, { useEffect, useRef, memo } from 'react';
 import DiagramVisualizer from './DiagramVisualizer';
 import { getSuitableLevelKey, levels } from './LevelSelector';
 
-const Diagram = ({ selectLevel, data, selectedLevel, onUpdateError }) => {
+function Diagram({ selectLevel, data, selectedLevel, onUpdateError }) {
   const containerId = 'cy';
   const diagram = useRef(null);
   const createDiagramVisualizerInstance = () =>
@@ -40,6 +40,6 @@ const Diagram = ({ selectLevel, data, selectedLevel, onUpdateError }) => {
   }, [diagram, data, selectedLevel]);
 
   return <div id={containerId} />;
-};
+}
 
 export default memo(Diagram);

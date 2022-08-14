@@ -6,11 +6,11 @@ const ENTER_KEY_CODE = 13;
 const INDENT_SIZE = 2;
 const DEPTH_INDICATOR = ':';
 
-export default ({
+export default function TextContentEditor({
   updateState,
   setUpdatingState,
   status,
-}) => {
+}) {
   const [text, setText] = useState();
   const [cursorPosition, setCursorPosition] = useState(null);
   const onChangeHandler = (e) => {
@@ -30,12 +30,18 @@ export default ({
           .slice(value.lastIndexOf('\n', end - 1), end)
           .replace(/\n/g, '');
         const headSpaces = prevLine.match(/^\s+/);
-        const increaseDepth = (prevLine || DEPTH_INDICATOR).slice(-1) === DEPTH_INDICATOR;
+        const increaseDepth =
+          (prevLine || DEPTH_INDICATOR).slice(-1) === DEPTH_INDICATOR;
         const parentOffset = (headSpaces || [''])[0].length;
-        const offset = increaseDepth ? parentOffset + INDENT_SIZE : parentOffset;
+        const offset = increaseDepth
+          ? parentOffset + INDENT_SIZE
+          : parentOffset;
         const computedSelectionPosition = selectionStart + offset;
 
-        setCursorPosition([computedSelectionPosition, computedSelectionPosition]);
+        setCursorPosition([
+          computedSelectionPosition,
+          computedSelectionPosition,
+        ]);
 
         return value
           .slice(0, selectionStart)
@@ -50,7 +56,7 @@ export default ({
 
     return () => clearTimeout(timerId);
     // eslint-disable-next-line
-  }, [text]); 
+  }, [text]);
 
   useEffect(() => {
     if (cursorPosition) {
@@ -71,4 +77,4 @@ export default ({
       <ContentStatus type={status} />
     </>
   );
-};
+}
