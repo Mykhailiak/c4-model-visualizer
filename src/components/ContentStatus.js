@@ -6,13 +6,15 @@ const messages = {
   error: 'Syntax error',
 };
 
-export default ({ type }) => (type
-    && (
-    <Alert
-      className="content-status-alert"
-      type={type}
-      message={messages[type]}
-      showIcon
-    />
+export default function ContentStatus({ type }) {
+  return (
+    type && (
+      <Alert
+        className="content-status-alert"
+        type={type}
+        message={messages[type]}
+        showIcon
+      />
     )
-);
+  );
+}

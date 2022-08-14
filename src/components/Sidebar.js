@@ -1,12 +1,16 @@
 import React from 'react';
-import { Spin, Icon, Layout } from 'antd';
+import { Spin, Layout } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 export default function Sidebar({ updatingContent }) {
-  const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
-
   return (
     <Layout.Sider width="70">
-      {updatingContent && <Spin style={{ width: '100%', paddingTop: 10 }} indicator={antIcon} />}
+      {updatingContent && (
+        <Spin
+          style={{ width: '100%', paddingTop: 10 }}
+          indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+        />
+      )}
     </Layout.Sider>
   );
 }

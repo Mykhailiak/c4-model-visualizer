@@ -8,5 +8,5 @@ deploy:
     branch: master
 script:
   - npm run eslint:check
-  - npm run test:ci
+  - npm run formatter:check
   - npm run build

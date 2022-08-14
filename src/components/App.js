@@ -11,7 +11,7 @@ import mock from '../mock.json';
 
 const isDevEnv = process.env.NODE_ENV === 'development';
 
-const App = () => {
+export default function App() {
   const [data, setData] = useState({});
   const [parsingStatus, setParsingStatus] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
@@ -19,10 +19,10 @@ const App = () => {
 
   useEffect(() => {
     if (isDevEnv) {
-        setData(mock);
-        setParsingStatus('success');
-        setSelectedLevel(selectedLevel || rootLevel);
-        setUpdatingContent(false);
+      setData(mock);
+      setParsingStatus('success');
+      setSelectedLevel(selectedLevel || rootLevel);
+      setUpdatingContent(false);
     }
   }, []);
 
@@ -75,6 +75,4 @@ const App = () => {
       </Layout.Content>
     </Layout>
   );
-};
-
-export default App;
+}

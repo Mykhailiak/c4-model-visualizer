@@ -9,43 +9,39 @@ export const getSuitableLevelKey = (context = {}, level = 0) => {
 };
 export const rootLevel = levels[0];
 
-export const createDataMap = (data = {}, level = 0, path = []) => (
-  Object.entries(data[levels[level]] || {})
-    .reduce((acc, [key, element]) => {
-      const { name } = element;
-      const nextLevel = level + 1;
-      const currentPath = path.concat(key);
+export const createDataMap = (data = {}, level = 0, path = []) =>
+  Object.entries(data[levels[level]] || {}).reduce((acc, [key, element]) => {
+    const { name } = element;
+    const nextLevel = level + 1;
+    const currentPath = path.concat(key);
 
-      if (getSuitableLevelKey(element, nextLevel)) {
-        acc.push({
-          key,
-          value: currentPath.join(':'),
-          title: `${name} - ${levels[nextLevel]}`,
-          children: createDataMap(element, nextLevel, currentPath),
-        });
-      }
+    if (getSuitableLevelKey(element, nextLevel)) {
+      acc.push({
+        key,
+        value: currentPath.join(':'),
+        title: `${name} - ${levels[nextLevel]}`,
+        children: createDataMap(element, nextLevel, currentPath),
+      });
+    }
 
-      return acc;
-    }, [])
-);
+    return acc;
+  }, []);
 export const computeLevelsList = (data, key) => {
   const title = 'Context';
 
-  return (rootLevel in data) ? [
-    {
-      title,
-      key,
-      value: key,
-      children: createDataMap(data, 0, [key]),
-    },
-  ] : [];
+  return rootLevel in data
+    ? [
+        {
+          title,
+          key,
+          value: key,
+          children: createDataMap(data, 0, [key]),
+        },
+      ]
+    : [];
 };
 
-const LevelSelector = ({
-  parsedYaml,
-  selectLevel,
-  value,
-}) => {
+function LevelSelector({ parsedYaml, selectLevel, value }) {
   const treeData = computeLevelsList(parsedYaml, rootLevel);
 
   return (
@@ -59,6 +55,6 @@ const LevelSelector = ({
       treeDefaultExpandAll
     />
   );
-};
+}
 
 export default memo(LevelSelector);
